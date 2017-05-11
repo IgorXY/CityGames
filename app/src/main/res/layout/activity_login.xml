@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tigerware.citygames.LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="344dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail:"
+            android:textColor="#000"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="344dp"
+            android:layout_alignBaseline="@+id/emailEditText"
+            android:layout_alignBottom="@+id/emailEditText"
+            android:layout_alignEnd="@+id/textView3"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Логин:"
+            android:textColor="#000"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="122dp"
+            android:layout_alignBaseline="@+id/loginEditText"
+            android:layout_alignBottom="@+id/loginEditText"
+            android:layout_toStartOf="@+id/emailEditText"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Пароль:"
+            android:textColor="#000"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="175dp"
+            android:layout_alignBaseline="@+id/passwordEditText"
+            android:layout_alignBottom="@+id/passwordEditText"
+            android:layout_toStartOf="@+id/emailEditText"
+            android:layout_marginEnd="11dp"/>
+
+        <EditText
+            android:id="@+id/loginEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/passwordEditText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="19dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="127dp"
+            tools:layout_editor_absoluteY="175dp"/>
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/signIButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="15dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="127dp"
+            tools:layout_editor_absoluteY="114dp"/>
+
+        <Button
+            android:id="@+id/signIButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onSignInClick"
+            android:text="Войти"
+            tools:layout_editor_absoluteX="127dp"
+            tools:layout_editor_absoluteY="250dp"
+            android:layout_marginBottom="34dp"
+            android:layout_above="@+id/emailEditText"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRegisterClick"
+            android:text="Создать аккаунт"
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="406dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp"/>
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/registerButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="47dp"
+            android:layout_marginEnd="9dp"
+            android:ems="10"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="337dp"/>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

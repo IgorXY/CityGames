@@ -22,8 +22,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    public ArrayList<Game> gameList;
-
+    private ArrayList<Game> gameList;
+    private User user;
    /* private ArrayList<Task> GetTaskList(int gameID){
         //TODO: get task list from server
         ArrayList<Task> taskList = new ArrayList<Task>();
@@ -83,151 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         gameList.add(game);
 
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-
-        //////////////////////////
-
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk2");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-        game = new Game();
-        game.setId(2);
-
-        game.setTitle("Minsk3");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(5);
-
-        game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);*/
+        */
 
         return gameList;
     }
@@ -278,13 +134,11 @@ public class MainActivity extends AppCompatActivity {
                     GameProgress gameProgress = new GameProgress();
                     gameProgress.setGame(game);
                     gameProgress.setStage(1);
-                    gameProgress.setNoteList(new ArrayList<String>());
-                    for(int i = 0; i<game.getTaskList().size(); i++) {
-                        gameProgress.getNoteList().add("");
-                    }
+
 
 
                     intent.putExtra("GameProgress", gameProgress);
+                    intent.putExtra("User", user);
                     startActivity(intent);
                 }
             });
@@ -314,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-
+        user = (User) getIntent().getSerializableExtra("User");
         InitializeActivity();
     }
 

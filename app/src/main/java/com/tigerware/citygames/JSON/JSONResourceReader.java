@@ -4,8 +4,13 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -53,6 +58,8 @@ public class JSONResourceReader {
 
         jsonString = writer.toString();
     }
+
+
 
     /**
      * Build an object from the specified JSON resource using Gson.
