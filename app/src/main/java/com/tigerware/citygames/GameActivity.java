@@ -159,6 +159,7 @@ public class GameActivity extends AppCompatActivity {
         note.setNote("");
         note.setTaskID(taskID);
         note.setUserID(user.getId());
+        note.setImageUri("");
         noteArrayList.add(note);
         return  note;
     }
