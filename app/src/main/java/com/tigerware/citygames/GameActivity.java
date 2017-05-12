@@ -193,13 +193,16 @@ public class GameActivity extends AppCompatActivity {
         Note curNote = getNote(curGame.getTaskList().get(gameProgress.getStage() - 1).getId());
         TextView textView = (TextView) findViewById(R.id.StageTextView);
         textView.setText("Этап "+ gameProgress.getStage());
-        textView = (TextView) findViewById(R.id.DecriptionTextView);
-        textView.setText("Задача: " + curGame.getTaskList().get(gameProgress.getStage() - 1).getDescription());
+        TextView descTextView = (TextView) findViewById(R.id.DecriptionTextView);
+        descTextView.setText("Задача: " + curGame.getTaskList().get(gameProgress.getStage() - 1).getDescription());
         editNote.setText(curNote.getNote());
         Task task =  gameProgress.getGame().getTaskList().get(gameProgress.getStage()-1);
-        if(getNote(task.getId()).isFinished()){
+       /* if(getNote(task.getId()).isFinished()){
             textView.setText("Цель: достигнута");
         }
+        else{
+            textView.setText("Цель: ");
+        }*/
         if(gameProgress.getStage() == 1){
             prevButton.setEnabled(false);
         }

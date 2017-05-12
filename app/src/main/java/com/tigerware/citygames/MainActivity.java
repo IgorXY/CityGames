@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
             TextView title = new TextView(this);
             title.setText(game.getTitle());
 
-            TextView start = new TextView(this);
-            start.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getStart_date() ));
-            TextView end = new TextView(this);
-            end.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getFinishDate()));
+            TextView dateView = new TextView(this);
+            //start.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getStart_date() ));
+            TextView preDateView = new TextView(this);
+            //end.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getFinishDate()));
 
             Button button = new Button(this);
             button.setText("Начать");
@@ -145,13 +145,23 @@ public class MainActivity extends AppCompatActivity {
          //   button.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             if ((date.after(game.getStart_date()) || date.equals(game.getStart_date())) && date.before(game.getFinishDate())){
                 button.setEnabled(true);
+                preDateView.setText("до:");
+                dateView.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getFinishDate()));
             }
-            else
+            else {
                 button.setEnabled(false);
-
+                if (date.after(game.getFinishDate())) {
+                    dateView.setText("");
+                    preDateView.setText("закончена");
+                } else {
+                    dateView.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getStart_date()));
+                    preDateView.setText("начнется:");
+                }
+            }
             row.addView(title);
-            row.addView(start);
-            row.addView(end);
+
+            row.addView(preDateView);
+            row.addView(dateView);
             row.addView(button);
 
             table.addView(row);

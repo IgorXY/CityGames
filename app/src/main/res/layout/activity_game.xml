@@ -8,9 +8,10 @@
 
     <RelativeLayout
         android:layout_width="344dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_height="550dp"
+        android:layout_marginBottom="-168dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="8dp">
 
         <TextView
             android:id="@+id/StageTextView"
@@ -24,7 +25,7 @@
             android:text="Этап"
             android:textAlignment="center"
             android:textColor="#000"
-            android:textSize="36sp" />
+            android:textSize="36sp"/>
 
         <TextView
             android:id="@+id/DecriptionTextView"
@@ -40,22 +41,22 @@
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="24sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/DistabceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/CheckButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
             android:text="Цель: "
             android:textAlignment="center"
             android:textColor="#000"
-            android:textSize="24sp"
-            android:layout_above="@+id/CheckButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:textSize="24sp"/>
 
         <Button
             android:id="@+id/CheckButton"
@@ -79,7 +80,7 @@
             android:background="@null"
             android:onClick="previousClick"
             android:text="prev"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
         <Button
             android:id="@+id/nextButton"
@@ -92,20 +93,20 @@
             android:background="@null"
             android:onClick="nextClick"
             android:text="Next"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
         <EditText
             android:id="@+id/noteEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine"
             android:layout_above="@+id/DistabceTextView"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="51dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:ems="10"
+            android:inputType="textMultiLine"/>
 
         <Button
             android:id="@+id/saveNoteButton"
@@ -114,7 +115,7 @@
             android:layout_above="@+id/DistabceTextView"
             android:layout_centerHorizontal="true"
             android:onClick="saveNote"
-            android:text="Сохранить" />
+            android:text="Сохранить"/>
 
         <ImageView
             android:id="@+id/imageView3"
