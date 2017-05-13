@@ -9,49 +9,49 @@
 
     <RelativeLayout
         android:layout_width="344dp"
-        android:layout_height="495dp"
+        android:layout_height="550dp"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="6dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/emailEditText"
+            android:layout_alignBottom="@+id/emailEditText"
+            android:layout_alignEnd="@+id/textView3"
             android:text="E-mail:"
             android:textColor="#000"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="34dp"
-            tools:layout_editor_absoluteY="344dp"
-            android:layout_alignBaseline="@+id/emailEditText"
-            android:layout_alignBottom="@+id/emailEditText"
-            android:layout_alignEnd="@+id/textView3"/>
+            tools:layout_editor_absoluteY="344dp"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/loginEditText"
+            android:layout_alignBottom="@+id/loginEditText"
+            android:layout_toStartOf="@+id/emailEditText"
             android:text="Логин:"
             android:textColor="#000"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="122dp"
-            android:layout_alignBaseline="@+id/loginEditText"
-            android:layout_alignBottom="@+id/loginEditText"
-            android:layout_toStartOf="@+id/emailEditText"/>
+            tools:layout_editor_absoluteY="122dp"/>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/passwordEditText"
+            android:layout_alignBottom="@+id/passwordEditText"
+            android:layout_marginEnd="11dp"
+            android:layout_toStartOf="@+id/emailEditText"
             android:text="Пароль:"
             android:textColor="#000"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="175dp"
-            android:layout_alignBaseline="@+id/passwordEditText"
-            android:layout_alignBottom="@+id/passwordEditText"
-            android:layout_toStartOf="@+id/emailEditText"
-            android:layout_marginEnd="11dp"/>
+            tools:layout_editor_absoluteY="175dp"/>
 
         <EditText
             android:id="@+id/loginEditText"
@@ -81,25 +81,25 @@
             android:id="@+id/signIButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/emailEditText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="34dp"
             android:onClick="onSignInClick"
             android:text="Войти"
             tools:layout_editor_absoluteX="127dp"
-            tools:layout_editor_absoluteY="250dp"
-            android:layout_marginBottom="34dp"
-            android:layout_above="@+id/emailEditText"
-            android:layout_centerHorizontal="true"/>
+            tools:layout_editor_absoluteY="250dp"/>
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
             android:onClick="onRegisterClick"
             android:text="Создать аккаунт"
             tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="406dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"/>
+            tools:layout_editor_absoluteY="406dp"/>
 
         <EditText
             android:id="@+id/emailEditText"
@@ -107,12 +107,23 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/registerButton"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="47dp"
-            android:layout_marginEnd="9dp"
+            android:layout_marginBottom="22dp"
+            android:layout_marginEnd="14dp"
             android:ems="10"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             tools:layout_editor_absoluteX="125dp"
             tools:layout_editor_absoluteY="337dp"/>
+
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:srcCompat="@drawable/logo"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/textView"/>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

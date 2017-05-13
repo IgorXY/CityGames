@@ -1,17 +1,22 @@
 package com.tigerware.citygames;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.tigerware.citygames.Adapter.GameAdapter;
 import com.tigerware.citygames.Entity.*;
 import com.tigerware.citygames.JSON.JSONResourceReader;
 
@@ -24,37 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Game> gameList;
     private User user;
-   /* private ArrayList<Task> GetTaskList(int gameID){
-        //TODO: get task list from server
-        ArrayList<Task> taskList = new ArrayList<Task>();
-        Task task = new Task();
+    private ListView listView;
+    private GameAdapter gameAdapter;
 
-        task.setId(1);
-        task.setDescription("Туда, не знаю куда");
-        task.setLatitude(27.345435);
-        task.setLongitude(52.344534);
-        taskList.add(task);
-
-
-
-        task = new Task();
-        task.setId(2);
-        task.setDescription("Сюда");
-        task.setLatitude(27.345435);
-        task.setLongitude(52.344534);
-        taskList.add(task);
-
-        task = new Task();
-        task.setId(3);
-        task.setDescription("В никуда");
-        task.setLatitude(27.345435);
-        task.setLongitude(52.344534);
-        taskList.add(task);
-        return taskList;
-    }*/
 
     private ArrayList<Game> GetGameList(){
-        //TODO: get game list from server
+
 
         JSONResourceReader reader = new JSONResourceReader(getResources(), R.raw.game1);
         Game[] gameArray = reader.constructUsingGson(Game[].class);
@@ -71,19 +51,6 @@ public class MainActivity extends AppCompatActivity {
             }
             gameList.add(gameArray[i]);
         }
-        /*Game game = new Game();
-        game.setId(1);
-
-        game.setTitle("Minsk1");
-        game.setStart_date( java.sql.Date.valueOf("2017-04-16"));
-        game.setFinishDate(java.sql.Date.valueOf("2017-04-20"));
-        game.setStageAmount(1);
-
-       /* game.setTaskList(GetTaskList((game.getId())));
-
-        gameList.add(game);
-
-        */
 
         return gameList;
     }
@@ -105,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             button.setEnabled(false);*/
-        RelativeLayout rl = new RelativeLayout(this);
+       /* RelativeLayout rl = new RelativeLayout(this);
         ScrollView scroll = new ScrollView(this);
         HorizontalScrollView hscroll = new HorizontalScrollView(this);
         TableLayout table = new TableLayout(this);
@@ -113,13 +80,14 @@ public class MainActivity extends AppCompatActivity {
        table.setStretchAllColumns(true);
        // table.setShrinkAllColumns(true);
         Date date = new Date();
-        final Intent intent = new Intent(this, GameActivity.class);
+
         for (final Game game: gameList) {
             TableRow row = new TableRow(this);
             row.setPadding(50, 50, 50, 5);
 
             TextView title = new TextView(this);
             title.setText(game.getTitle());
+            title.setTextColor(Color.BLACK);
 
             TextView dateView = new TextView(this);
             //start.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getStart_date() ));
@@ -152,15 +120,18 @@ public class MainActivity extends AppCompatActivity {
                 button.setEnabled(false);
                 if (date.after(game.getFinishDate())) {
                     dateView.setText("");
-                    preDateView.setText("закончена");
+                    preDateView.setText(" закончена ");
+                    preDateView.setTextColor(Color.RED);
+
                 } else {
                     dateView.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getStart_date()));
-                    preDateView.setText("начнется:");
+                    preDateView.setText(" начнется: ");
+                    preDateView.setTextColor(Color.BLUE);
                 }
             }
             row.addView(title);
-
             row.addView(preDateView);
+            dateView.setTextColor(Color.BLACK);
             row.addView(dateView);
             row.addView(button);
 
@@ -171,13 +142,37 @@ public class MainActivity extends AppCompatActivity {
         hscroll.addView(table);
         scroll.addView(hscroll);
         rl.addView(scroll);
-        setContentView(rl);
+        setContentView(rl);*/
+        final Intent intent = new Intent(this, GameActivity.class);
+       listView = (ListView) findViewById(R.id.listView);
+        gameAdapter = new GameAdapter(this, R.layout.list_item, gameList);
+        listView.setAdapter(gameAdapter);
+
+        AdapterView.OnItemClickListener itemListener= new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Game game = (Game)parent.getItemAtPosition(position);
+                Date date = new Date();
+                if ((date.after(game.getStart_date()) || date.equals(game.getStart_date()))
+                        && date.before(game.getFinishDate())) {
+                    GameProgress gameProgress = new GameProgress();
+                    gameProgress.setGame(game);
+                    gameProgress.setStage(1);
+
+                    intent.putExtra("GameProgress", gameProgress);
+                    intent.putExtra("User", user);
+                    startActivity(intent);
+                }
+            }
+        };
+
+        listView.setOnItemClickListener(itemListener);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         user = (User) getIntent().getSerializableExtra("User");
         InitializeActivity();
     }

@@ -11,6 +11,17 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
 
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="463dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
 
