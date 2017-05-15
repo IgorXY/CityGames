@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,11 +20,34 @@ import android.widget.TextView;
 import com.tigerware.citygames.Adapter.GameAdapter;
 import com.tigerware.citygames.Entity.*;
 import com.tigerware.citygames.JSON.JSONResourceReader;
+import com.tigerware.citygames.WEB.GetFromWeb;
 
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.security.KeyStore;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -174,6 +198,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         user = (User) getIntent().getSerializableExtra("User");
+        /*try {
+            GetFromWeb getFromWeb = new GetFromWeb();
+            String s = getFromWeb.getInternetData("http://localhost:8808/ReCourse/api/games");
+        }catch(Exception e){};*/
         InitializeActivity();
     }
 
@@ -182,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
 }
+
+
 

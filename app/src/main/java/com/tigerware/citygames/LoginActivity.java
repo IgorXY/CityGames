@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 
@@ -103,18 +104,22 @@ public class LoginActivity extends AppCompatActivity {
         if(!login.equals("")){
             if(!password.equals("")){
                 if(!email.equals("")){
-                    int hash = password.hashCode();
-                    for (User user:userArrayList) {
-                        if(user.getUsername().equals(login)) {
-                            return "Такой логин уже используется";
-                            }
-                        else{
-                            if(user.getEmail().equals(email)) {
-                                return "Такой email уже используется";
-                            }
+                    if(Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        int hash = password.hashCode();
+                        for (User user : userArrayList) {
+                            if (user.getUsername().equals(login)) {
+                                return "Такой логин уже используется";
+                            } else {
+                                if (user.getEmail().equals(email)) {
+                                    return "Такой email уже используется";
+                                }
 
 
+                            }
                         }
+                    }
+                    else{
+                        return "Введите действительный email";
                     }
                 }
                 else{
@@ -167,6 +172,8 @@ public class LoginActivity extends AppCompatActivity {
             alertDialog.create().show();
         }
     }
+
+
 
 
 }

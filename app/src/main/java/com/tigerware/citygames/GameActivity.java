@@ -28,9 +28,12 @@ import android.widget.TextView;
 
 import com.tigerware.citygames.Entity.Game;
 import com.tigerware.citygames.Entity.GameProgress;
+import com.tigerware.citygames.Entity.Hint;
+import com.tigerware.citygames.Entity.HintStatus;
 import com.tigerware.citygames.Entity.Note;
 import com.tigerware.citygames.Entity.Task;
 import com.tigerware.citygames.Entity.User;
+import com.tigerware.citygames.JSON.JSONResourceReader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -50,13 +53,17 @@ public class GameActivity extends AppCompatActivity {
     private boolean track = false;
     private Button prevButton;
     private Button nextButton;
+    private Button getHintButton;
     private EditText editNote;
     private User user;
     public GameProgress gameProgress;
     public ArrayList<Note> noteArrayList;
     private ImageView imageView;
-    private  static  String filename = "notes";
+    private  static  String filenameNotes = "notes";
+    private  static  String filenameHintStatus = "hintStatuses";
     private HashMap<String, Bitmap> pictureCache = new HashMap<String, Bitmap>();
+    private ArrayList<HintStatus> hintStatusArrayList;
+    private Hint[] hints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +71,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         gameProgress = (GameProgress) getIntent().getSerializableExtra("GameProgress");
         user = (User) getIntent().getSerializableExtra("User");
-
+        JSONResourceReader reader = new JSONResourceReader(getResources(), R.raw.hints);
+        hints = reader.constructUsingGson(Hint[].class);
         ////////////////////////
        /* noteArrayList = new ArrayList<Note>();
         for(Task task:gameProgress.getGame().getTaskList()){
@@ -99,9 +107,27 @@ public class GameActivity extends AppCompatActivity {
             SaveNoteList();
             LoadNoteList();
         }
+        /////////////////////////
+        LoadHintStatusList();
+        if(hintStatusArrayList == null) {
+            ////////////////////////
+            hintStatusArrayList = new ArrayList<HintStatus>();
+            HintStatus hintStatus = new HintStatus();
+            hintStatus.setGameID(gameProgress.getGame().getId());
+            hintStatus.setUserID(user.getId());
+            hintStatus.setHintLeft(3);
+
+            hintStatusArrayList.add(hintStatus);
+
+
+            SaveHintStatusList();
+            LoadHintStatusList();
+        }
+
 
         prevButton = (Button)findViewById(R.id.prevButton);
         nextButton = (Button)findViewById(R.id.nextButton);
+        getHintButton = (Button)findViewById(R.id.hintButton);
         imageView = (ImageView) findViewById(R.id.imageView3);
         takePictureButton = (Button)findViewById(R.id.CheckButton);
        // takePictureButton.setEnabled(false);
@@ -234,8 +260,17 @@ public class GameActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.StageTextView);
         textView.setText("Этап "+ gameProgress.getStage());
         TextView descTextView = (TextView) findViewById(R.id.DecriptionTextView);
-        descTextView.setText("Задача: " + curGame.getTaskList().get(gameProgress.getStage() - 1).getDescription());
+        String hint = getNote(-1*curGame.getTaskList().get(gameProgress.getStage() - 1).getId()).getNote();
         editNote.setText(curNote.getNote());
+        if(!hint.equals("")){
+            getHintButton.setEnabled(false);
+            descTextView.setText("Задача: " + curGame.getTaskList().get(gameProgress.getStage() - 1).getDescription() +"("+hint+")");
+        }
+        else{
+            getHintButton.setEnabled(true);
+            descTextView.setText("Задача: " + curGame.getTaskList().get(gameProgress.getStage() - 1).getDescription());
+        }
+
         Task task =  gameProgress.getGame().getTaskList().get(gameProgress.getStage()-1);
        /* if(getNote(task.getId()).isFinished()){
             textView.setText("Цель: достигнута");
@@ -280,7 +315,6 @@ public class GameActivity extends AppCompatActivity {
             imageView.setImageBitmap(null);
         }
 
-
     }
 
     public void previousClick(View view){
@@ -300,7 +334,7 @@ public class GameActivity extends AppCompatActivity {
     }
     private  void SaveNoteList(){
         try {
-            FileOutputStream fileOutputStream = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fileOutputStream = getApplicationContext().openFileOutput(filenameNotes, Context.MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(noteArrayList);
             objectOutputStream.close();
@@ -312,9 +346,35 @@ public class GameActivity extends AppCompatActivity {
     }
     private void LoadNoteList(){
         try{
-            FileInputStream fileInputStream = getApplicationContext().openFileInput(filename);
+            FileInputStream fileInputStream = getApplicationContext().openFileInput(filenameNotes);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             noteArrayList = (ArrayList<Note>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+        }
+        catch (IOException e) {
+        }
+        catch (ClassNotFoundException e){
+        }
+    }
+
+    private  void SaveHintStatusList(){
+        try {
+            FileOutputStream fileOutputStream = getApplicationContext().openFileOutput(filenameHintStatus, Context.MODE_PRIVATE);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(hintStatusArrayList);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        }
+        catch (IOException e){
+
+        }
+    }
+    private void LoadHintStatusList(){
+        try{
+            FileInputStream fileInputStream = getApplicationContext().openFileInput(filenameHintStatus);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            hintStatusArrayList = (ArrayList<HintStatus>) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
         }
@@ -341,5 +401,52 @@ public class GameActivity extends AppCompatActivity {
             fillInfo();
         }
         //imageView.setImageBitmap(bitmap);
+    }
+
+    public void getHintClick(View view) {
+        int taskID = gameProgress.getGame().getTaskList().get(gameProgress.getStage()-1).getId();
+        Hint h = null;
+        for(int i=0; i<hints.length; i++) {
+            if (hints[i].getTaskID() == taskID) {
+                h = hints[i];
+                break;
+            }
+        }
+        if(h != null){
+            boolean hintStatusFound = false;
+            for(HintStatus hintStatus: hintStatusArrayList){
+                if(hintStatus.getUserID()== user.getId() && hintStatus.getGameID()== gameProgress.getGame().getId()){
+                    hintStatusFound=true;
+                    if(hintStatus.getHintLeft()>0){
+                        getNote(-1*taskID).setNote(h.getHint());
+                        hintStatus.setHintLeft(hintStatus.getHintLeft()-1);
+                        break;
+                    }
+                    else{
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                        alertDialog.setMessage("Вы уже использовали все подсказки!");
+                        alertDialog.setTitle("City Games");
+                        alertDialog.setCancelable(true);
+                        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                        alertDialog.create().show();
+                    }
+                }
+            }
+            if(!hintStatusFound){
+                HintStatus hintStatus= new HintStatus();
+                hintStatus.setGameID(gameProgress.getGame().getId());
+                hintStatus.setUserID(user.getId());
+                hintStatus.setHintLeft(2);
+                getNote(-1*taskID).setNote(h.getHint());
+            }
+            SaveHintStatusList();
+            SaveNoteList();
+            fillInfo();
+    }
     }
 }

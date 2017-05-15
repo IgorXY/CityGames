@@ -6,4 +6,5 @@
   {"id":6,"longitude":"52.344534","latitude":"27.345435","description":"Туда, не знаю куда 6","gameID":1},
   {"id":7,"longitude":"52.344534","latitude":"27.345435","description":"Туда, не знаю куда 7","gameID":2},
   {"id":8,"longitude":"52.344534","latitude":"27.345435","description":"Туда, не знаю куда 8","gameID":1},
-  {"id":8,"longitude":"52.344534","latitude":"27.345435","description":"Туда, не знаю куда 9","gameID":3}]
+  {"id":9,"longitude":"52.344534","latitude":"27.345435","description":"Туда, не знаю куда 9","gameID":3},
+  {"id":10,"longitude":"52.344534","latitude":"27.345435","description":"Туда, не знаю куда 10","gameID":2}]
