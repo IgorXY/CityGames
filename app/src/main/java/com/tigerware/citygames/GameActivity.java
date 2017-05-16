@@ -64,7 +64,8 @@ public class GameActivity extends AppCompatActivity {
     private HashMap<String, Bitmap> pictureCache = new HashMap<String, Bitmap>();
     private ArrayList<HintStatus> hintStatusArrayList;
     private Hint[] hints;
-
+    private TextView stageTextView;
+    private TextView descTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +96,6 @@ public class GameActivity extends AppCompatActivity {
             for (Task task : gameProgress.getGame().getTaskList()) {
                 Note note = new Note();
                 note.setId(noteArrayList.size());
-                note.setFinished(false);
                 note.setNote("");
                 note.setTaskID(task.getId());
                 note.setUserID(user.getId());
@@ -130,7 +130,9 @@ public class GameActivity extends AppCompatActivity {
         getHintButton = (Button)findViewById(R.id.hintButton);
         imageView = (ImageView) findViewById(R.id.imageView3);
         takePictureButton = (Button)findViewById(R.id.CheckButton);
-       // takePictureButton.setEnabled(false);
+        stageTextView = (TextView) findViewById(R.id.StageTextView);
+        descTextView = (TextView) findViewById(R.id.DecriptionTextView);
+        takePictureButton.setEnabled(false);
         editNote = (EditText) findViewById(R.id.noteEditText);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -138,21 +140,20 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 TextView textView = (TextView) findViewById(R.id.DistabceTextView);
-                Task task =  gameProgress.getGame().getTaskList().get(gameProgress.getStage()-1);
-                if(getNote(task.getId()).isFinished()){
-                    textView.setText("Цель: достигнута");
-                }else {
-                    gameProgress.setDestination((int) gameProgress.calculateDistance(
-                            location.getLatitude(), location.getLongitude(),
-                            task.getLatitude(), task.getLongitude()));
-                    textView.setText("Цель: " + gameProgress.getDestination());
-                }
-                if(gameProgress.getDestination().equals("достигнута")){
+                Task task = gameProgress.getGame().getTaskList().get(gameProgress.getStage() - 1);
+
+                gameProgress.setDestination((int) gameProgress.calculateDistance(
+                        location.getLatitude(), location.getLongitude(),
+                        task.getLatitude(), task.getLongitude()));
+                textView.setText("Цель: " + gameProgress.getDestination());
+
+                if (gameProgress.getDestination().equals("достигнута")) {
                     takePictureButton.setEnabled(true);
-                    if(gameProgress.getStage() == gameProgress.getGame().getStageAmount()){
-                        takePictureButton.setText("Закончить");
-                    }
+
+                }else{
+                    takePictureButton.setEnabled(false);
                 }
+
             }
 
             @Override
@@ -186,7 +187,6 @@ public class GameActivity extends AppCompatActivity {
         }
         Note note  = new Note();
         note.setId(noteArrayList.size());
-        note.setFinished(false);
         note.setNote("");
         note.setTaskID(taskID);
         note.setUserID(user.getId());
@@ -257,9 +257,8 @@ public class GameActivity extends AppCompatActivity {
     public void fillInfo(){
         Game curGame = gameProgress.getGame();
         Note curNote = getNote(curGame.getTaskList().get(gameProgress.getStage() - 1).getId());
-        TextView textView = (TextView) findViewById(R.id.StageTextView);
-        textView.setText("Этап "+ gameProgress.getStage());
-        TextView descTextView = (TextView) findViewById(R.id.DecriptionTextView);
+
+        stageTextView.setText("Этап "+ gameProgress.getStage());
         String hint = getNote(-1*curGame.getTaskList().get(gameProgress.getStage() - 1).getId()).getNote();
         editNote.setText(curNote.getNote());
         if(!hint.equals("")){
@@ -270,14 +269,6 @@ public class GameActivity extends AppCompatActivity {
             getHintButton.setEnabled(true);
             descTextView.setText("Задача: " + curGame.getTaskList().get(gameProgress.getStage() - 1).getDescription());
         }
-
-        Task task =  gameProgress.getGame().getTaskList().get(gameProgress.getStage()-1);
-       /* if(getNote(task.getId()).isFinished()){
-            textView.setText("Цель: достигнута");
-        }
-        else{
-            textView.setText("Цель: ");
-        }*/
         if(gameProgress.getStage() == 1){
             prevButton.setEnabled(false);
         }
@@ -306,6 +297,7 @@ public class GameActivity extends AppCompatActivity {
                     pictureCache.put(curNote.getImageUri(), bitmap);
                     imageView.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
+                    pictureCache.remove(curNote.getImageUri());
                     curNote.setImageUri("");
                 }
 
@@ -392,15 +384,12 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-       // bitmap = (Bitmap) data.getExtras().get("content");
         if(resultCode != 0) {
             String s = data.getDataString();
             getNote(gameProgress.getGame().getTaskList().get(gameProgress.getStage() - 1).getId()).setImageUri(s);
             SaveNoteList();
             fillInfo();
         }
-        //imageView.setImageBitmap(bitmap);
     }
 
     public void getHintClick(View view) {

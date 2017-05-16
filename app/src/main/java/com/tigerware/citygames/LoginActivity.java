@@ -172,8 +172,4 @@ public class LoginActivity extends AppCompatActivity {
             alertDialog.create().show();
         }
     }
-
-
-
-
 }

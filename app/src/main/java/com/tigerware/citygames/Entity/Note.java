@@ -11,7 +11,6 @@ public class Note implements Serializable {
     private int userID;
     private int taskID;
     private String note;
-    private boolean finished;
     private String imageUri;
 
     public String getImageUri() {
@@ -54,11 +53,5 @@ public class Note implements Serializable {
         this.note = note;
     }
 
-    public boolean isFinished() {
-        return finished;
-    }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
 }

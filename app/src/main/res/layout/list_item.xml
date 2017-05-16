@@ -21,14 +21,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.26"
         android:text="TextView"
+        android:textAlignment="textEnd"
         android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/dateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.26"
+        android:layout_weight="0.31"
         android:text="TextView"
+        android:textAlignment="viewEnd"
         android:textColor="#000"
         android:textSize="18sp"/>
 </LinearLayout>

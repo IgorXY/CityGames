@@ -50,13 +50,13 @@ public class GameAdapter extends ArrayAdapter<Game> {
         }
         else {
             if (date.after(game.getFinishDate())) {
-                dateText.setText("");
-                preDateText.setText(" закончена ");
-                preDateText.setTextColor(Color.RED);
+                preDateText.setText("");
+                dateText.setText("закончена ");
+                dateText.setTextColor(Color.RED);
 
             } else {
                 dateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(game.getStart_date()));
-                preDateText.setText(" c: ");
+                preDateText.setText("c:");
                 preDateText.setTextColor(Color.BLUE);
             }
         }
