@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,7 +61,7 @@ public class GameActivity extends AppCompatActivity {
     public ArrayList<Note> noteArrayList;
     private ImageView imageView;
     private  static  String filenameNotes = "notes";
-    private  static  String filenameHintStatus = "hintStatuses";
+    private  static  String filenameHintStatus = "hintstatuses";
     private HashMap<String, Bitmap> pictureCache = new HashMap<String, Bitmap>();
     private ArrayList<HintStatus> hintStatusArrayList;
     private Hint[] hints;
@@ -297,7 +298,6 @@ public class GameActivity extends AppCompatActivity {
                     pictureCache.put(curNote.getImageUri(), bitmap);
                     imageView.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
-                    pictureCache.remove(curNote.getImageUri());
                     curNote.setImageUri("");
                 }
 
@@ -333,7 +333,7 @@ public class GameActivity extends AppCompatActivity {
             fileOutputStream.close();
         }
         catch (IOException e){
-
+            Log.getStackTraceString(e);
         }
     }
     private void LoadNoteList(){
@@ -345,6 +345,7 @@ public class GameActivity extends AppCompatActivity {
             fileInputStream.close();
         }
         catch (IOException e) {
+            Log.getStackTraceString(e);
         }
         catch (ClassNotFoundException e){
         }
@@ -359,7 +360,7 @@ public class GameActivity extends AppCompatActivity {
             fileOutputStream.close();
         }
         catch (IOException e){
-
+            Log.getStackTraceString(e);
         }
     }
     private void LoadHintStatusList(){
@@ -371,6 +372,7 @@ public class GameActivity extends AppCompatActivity {
             fileInputStream.close();
         }
         catch (IOException e) {
+            Log.getStackTraceString(e);
         }
         catch (ClassNotFoundException e){
         }

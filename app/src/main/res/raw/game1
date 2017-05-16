@@ -1,4 +1,4 @@
 [{"id":1,"title":"Минский старт","startDate":"2017-05-09","finishDate":"2017-05-12","taskList":null,"stageAmount":5},
-  {"id":2,"title":"Минск2","startDate":"2017-05-09","finishDate":"2017-05-14","taskList":null,"stageAmount":5},
-  {"id":3,"title":"Минск сингл","startDate":"2017-05-19","finishDate":"2017-06-12","taskList":null,"stageAmount":1},
-  {"id":4,"title":"Сдача проекта","startDate":"2017-05-15","finishDate":"2017-05-16","taskList":null,"stageAmount":3}]
+  {"id":2,"title":"тест","startDate":"2017-05-09","finishDate":"2017-05-14","taskList":null,"stageAmount":5},
+  {"id":3,"title":"Минск будущего","startDate":"2017-05-19","finishDate":"2017-06-12","taskList":null,"stageAmount":1},
+  {"id":4,"title":"Сдача проекта","startDate":"2017-05-15","finishDate":"2017-05-17","taskList":null,"stageAmount":3}]

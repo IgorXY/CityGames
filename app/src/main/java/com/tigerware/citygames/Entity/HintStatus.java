@@ -1,10 +1,12 @@
 package com.tigerware.citygames.Entity;
 
+import java.io.Serializable;
+
 /**
  * Created by User on 15.05.2017.
  */
 
-public class HintStatus {
+public class HintStatus implements Serializable {
     private int userID;
     private int gameID;
     private int hintLeft;
