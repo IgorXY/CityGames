@@ -259,6 +259,7 @@ public class GameActivity extends AppCompatActivity {
         Game curGame = gameProgress.getGame();
         Note curNote = getNote(curGame.getTaskList().get(gameProgress.getStage() - 1).getId());
 
+        takePictureButton.setEnabled(false);
         stageTextView.setText("Этап "+ gameProgress.getStage());
         String hint = getNote(-1*curGame.getTaskList().get(gameProgress.getStage() - 1).getId()).getNote();
         editNote.setText(curNote.getNote());
